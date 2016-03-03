@@ -1,0 +1,10 @@
+#ifndef TEST_H
+#define TEST_H
+
+class test {
+
+	static wchar_t message[];
+	static void printMessage();
+};
+
+#endif
