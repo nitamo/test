@@ -15,12 +15,14 @@ public class LargerHttpd {
 	Selector clientSelector;
 
 	public void run(int port, int threads) throws IOException {
-		clientSelector = Selector.open();
 
 		ServerSocketChannel ssc = ServerSocketChannel.open();
 		ssc.configureBlocking( false );
 		InetSocketAddress sa = new InetSocketAddress( InetAddress.getLoopbackAddress(), port );
 		ssc.socket().bind( sa );
+
+		clientSelector = Selector.open();
+
 		ssc.register( clientSelector, SelectionKey.OP_ACCEPT );
 
 		Executor executor = Executors.newFixedThreadPool( threads );
@@ -109,12 +111,16 @@ class HttpdConnection {
 		request = charset.decode( buff ).toString();
 		Matcher get = httpGetPattern.matcher( request );
 
-		if( request != null)
-			System.out.println("Request: " + request);
+		if( request != null ) {
+			System.out.println("===== RAW Request =====");
+			System.out.print( request );
+			System.out.println("=== End RAW Request ===");
+		}
 
 		if( get.matches() ) {
+			
 			request = get.group( 1 );
-
+			
 			if( request.endsWith("/") || request.equals(""))
 				request = request + "index.html";
 
