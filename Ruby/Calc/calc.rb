@@ -16,12 +16,12 @@ end
 def setOp(opThis, precNew)
 	while $operators.size > 0 do
 		opTop = $operators.pop
-		if opTop === "("
+		if opTop == "("
 			$operators.push opTop
 			break
 		else
 			precOld = 0
-			if opTop === "-" || opTop === "+"
+			if opTop == "-" || opTop == "+"
 				precOld = 1
 			else
 				precOld = 2
@@ -40,7 +40,7 @@ end
 def setParent
 	while $operators.size > 0 do
 		c = $operators.pop
-		if c === "("
+		if c == "("
 			break
 		else
 			$postfix.push c
@@ -53,15 +53,15 @@ $input.each_char do |c|
 		$digits.push c
 	else
 		setNum	
-		if c === "+" || c === "-"
+		if c == "+" || c == "-"
 			setOp(c, 1)
-		elsif c === "*" || c === "/"
+		elsif c == "*" || c == "/"
 			setOp(c, 2)
-		elsif c === "("
+		elsif c == "("
 			$operators.push c
-		elsif c === ")"
+		elsif c == ")"
 			setParent
-		elsif c === " " || c === "\n" 
+		elsif c == " " || c == "\n" 
 			next
 		else
 			puts "Only 0-9+-*/() are supported, please check your input"
@@ -80,7 +80,7 @@ print "Postfix form is: #{$postfix}\n"
 $output = []
 
 $postfix.each do |i|
-	if i === "0"
+	if i == "0"
 		$output.push 0
 	else
 		num0 = i.to_i
